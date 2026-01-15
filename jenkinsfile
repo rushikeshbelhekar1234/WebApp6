@@ -1,0 +1,45 @@
+pipeline{
+    agent any
+    
+    environment{
+        DOTNET_CLI_HOME="C:\\Program Files\\dotnet"
+    }
+
+    stages{
+        satge("Checkout"){
+          steps{
+            checkout scm
+          }
+        }
+
+        stage("Build"){
+            steps{
+                bat "dotnet restore"
+                bat "dotnet build --configuration Release"
+            }
+        }
+
+        stage("Test"){
+            steps{
+                bat "dotnet test"
+            }   
+        }
+
+        stage("Publish"){
+            
+                steps{
+                    script{
+                    bat "dotnet publish --output .\\publish"
+                }
+            }
+        }
+        
+    }
+
+
+    post{
+           success{
+            echo "Project has been publish successfully..."
+           }
+    }
+}
