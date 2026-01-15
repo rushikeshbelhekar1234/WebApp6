@@ -6,7 +6,7 @@ pipeline{
     }
 
     stages{
-        satge("Checkout"){
+        stage("Checkout"){
           steps{
             checkout scm
           }
